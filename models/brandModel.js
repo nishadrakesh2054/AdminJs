@@ -1,20 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const brandLogoSchema = new mongoose.Schema({
   brandName: {
     type: String,
     required: true,
   },
-  logoImg: {
-    type: String, 
+  image: {
+    type: String,
     required: true,
   },
   brandLink: {
-    type: String, // Link to the brand's website
+    type: String,
     required: true,
   },
+  imageKey: { type: String },
+  bucket: { type: String },
+  mime: { type: String },
 });
 
-const BrandLogo = mongoose.model('BrandLogo', brandLogoSchema);
+const BrandLogo = mongoose.model("BrandLogo", brandLogoSchema);
 
 export default BrandLogo;

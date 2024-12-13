@@ -1,17 +1,18 @@
 import AdminJSExpress from "@adminjs/express";
+import * as url from 'url'
 import express from "express";
 import connectDatabase from "./db/Database.js";
 import galleryRoutes from "./routes/galleryRoute.js";
 import contactRoutes from "./routes/contactRoute.js";
-import brandLogoRoutes from './routes/brandRoute.js';
+import brandLogoRoutes from "./routes/brandRoute.js";
 import admin from "./src/admin/adminjsSetup.js";
-import cors from 'cors'
+import cors from "cors";
 import morgan from "morgan";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+
 const PORT = 3000;
 const app = express();
 
@@ -35,8 +36,9 @@ const start = async () => {
   app.use(morgan("dev"));
   dotenv.config();
 
-
   app.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
+  app.use(express.static(path.join(process.cwd(), 'public')));
+
   // Connect to MongoDB
   await connectDatabase();
 
@@ -60,21 +62,22 @@ const start = async () => {
     }
   );
 
-  // Middleware to inject FontAwesome into AdminJS
-  app.use("/admin", (req, res, next) => {
-    res.locals.fontAwesome =
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
-    next();
-  });
-
   // Use the authenticated router
   app.use(admin.options.rootPath, adminRouter);
 
   //   all routes here defined
   app.use("/api/galleries", galleryRoutes);
   app.use("/api/contact", contactRoutes);
-  app.use('/api/brand-logos', brandLogoRoutes);
+  app.use("/api/brandlogos", brandLogoRoutes);
 
+  // Catch-all route for non-API and non-admin routes (React App)
+  app.get("*", (req, res) => {
+    if (!req.path.startsWith("/api") && !req.path.startsWith("/admin")) {
+      res.sendFile(path.join(__dirname, "public/index.html"));
+    } else {
+      res.status(404).send("Not Found");
+    }
+  });
 
   // Start the server
   app.listen(PORT, () => {

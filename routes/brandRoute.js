@@ -6,12 +6,12 @@ import {
   deleteBrandLogo,
 } from "../controllers/brandController.js";
 
-import upload from "../multer/upload.js";
+import upload from "../utils/upload.js";
 
 const router = express.Router();
 
 // Create a new brand logo
-router.route("/").post(upload.single("logoImg"),createBrandLogo);
+router.route("/").post(upload.single("image"), createBrandLogo);
 
 // Get all brand logos
 router.route("/").get(getBrandLogos);

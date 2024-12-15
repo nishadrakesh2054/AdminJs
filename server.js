@@ -1,26 +1,32 @@
 import AdminJSExpress from "@adminjs/express";
-import * as url from 'url'
+import * as url from "url";
 import express from "express";
 import connectDatabase from "./db/Database.js";
 import galleryRoutes from "./routes/galleryRoute.js";
 import contactRoutes from "./routes/contactRoute.js";
 import brandLogoRoutes from "./routes/brandRoute.js";
+import getTouchRoutes from "./routes/getTouchRoute.js";
 import admin from "./src/admin/adminjsSetup.js";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 const PORT = 3000;
 const app = express();
 
 // Admin credentials (replace with a more secure method in production)
+// const DEFAULT_ADMIN = {
+//   email: process.env.ADMIN_EMAIL,
+//   password: process.env.ADMIN_PASSWORD,
+// };
+
 const DEFAULT_ADMIN = {
-  email: "admin@example.com",
-  password: "password",
-};
+    email: 'admin@example.com',
+    password: 'password',
+  }
 // Authentication logic
 const authenticate = async (email, password) => {
   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
@@ -37,7 +43,7 @@ const start = async () => {
   dotenv.config();
 
   app.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
-  app.use(express.static(path.join(process.cwd(), 'public')));
+//   app.use(express.static(path.join(process.cwd(), "public")));
 
   // Connect to MongoDB
   await connectDatabase();
@@ -45,6 +51,7 @@ const start = async () => {
   // Add authentication to AdminJS
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
+
     {
       authenticate,
       cookieName: "adminjs",
@@ -69,6 +76,7 @@ const start = async () => {
   app.use("/api/galleries", galleryRoutes);
   app.use("/api/contact", contactRoutes);
   app.use("/api/brandlogos", brandLogoRoutes);
+  app.use("/api/getintouch", getTouchRoutes);
 
   // Catch-all route for non-API and non-admin routes (React App)
   app.get("*", (req, res) => {

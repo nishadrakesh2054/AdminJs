@@ -15,7 +15,7 @@ const brandLogoSchema = new mongoose.Schema({
   },
   imageKey: { type: String },
   bucket: { type: String },
-  mime: { type: String },
+  mimeType: { type: String },
 });
 
 const BrandLogo = mongoose.model("BrandLogo", brandLogoSchema);

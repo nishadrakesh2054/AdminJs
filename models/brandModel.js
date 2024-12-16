@@ -1,22 +1,33 @@
 import mongoose from "mongoose";
 
-const brandLogoSchema = new mongoose.Schema({
-  brandName: {
-    type: String,
-    required: true,
+const brandLogoSchema = new mongoose.Schema(
+  {
+    brandName: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: false,
+    },
+    brandLink: {
+      type: String,
+      required: true,
+    },
+    imageKey: {
+      type: String,
+    },
+    bucket: {
+      type: String,
+    },
+    mime: {
+      type: String,
+    },
   },
-  image: {
-    type: String,
-    required: true,
-  },
-  brandLink: {
-    type: String,
-    required: true,
-  },
-  imageKey: { type: String },
-  bucket: { type: String },
-  mimeType: { type: String },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const BrandLogo = mongoose.model("BrandLogo", brandLogoSchema);
 

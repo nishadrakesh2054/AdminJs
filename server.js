@@ -11,6 +11,7 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
+import os from "os";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -22,7 +23,7 @@ const app = express();
 //   email: process.env.ADMIN_EMAIL,
 //   password: process.env.ADMIN_PASSWORD,
 // };
-
+os.tmpdir = () => "D:\\temp";
 const DEFAULT_ADMIN = {
     email: 'admin@example.com',
     password: 'password',
@@ -44,6 +45,8 @@ const start = async () => {
 
   app.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
 //   app.use(express.static(path.join(process.cwd(), "public")));
+
+
 
   // Connect to MongoDB
   await connectDatabase();

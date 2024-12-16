@@ -23,7 +23,7 @@ const gameSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: [true, "Category cannot be empty."],
+      required: [true, "Category cannot be empty"],
       minlength: [3, "Category must be between 3 and 255 characters."],
       maxlength: [255, "Category must be between 3 and 255 characters."],
     },

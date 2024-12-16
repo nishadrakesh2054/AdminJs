@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
-const ageGroupSchema = new mongoose.Schema(
+// Define the Program Schema
+const programSchema = new mongoose.Schema(
   {
-    ageGroup: {
+    name: {
       type: String,
       required: true,
     },
@@ -21,10 +22,10 @@ const ageGroupSchema = new mongoose.Schema(
     mime: {
       type: String,
     },
-    programId: {
+    academyId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Academy",
       required: true,
-      ref: "Program",
     },
   },
   {
@@ -32,7 +33,7 @@ const ageGroupSchema = new mongoose.Schema(
   }
 );
 
-// Create and export the model
-const AgeGroup = mongoose.model("AgeGroup", ageGroupSchema);
+// Create and export the Program model
+const Program = mongoose.model("Program", programSchema);
 
-export default AgeGroup;
+export default Program;

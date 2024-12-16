@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 
-const heroImageSchema = new mongoose.Schema(
+// Define the schema for SpecialCamps
+const specialCampsSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
+    },
+    description: {
+      type: String,
     },
     image: {
       type: String,
@@ -24,6 +28,7 @@ const heroImageSchema = new mongoose.Schema(
   }
 );
 
-const HeroImage = mongoose.model("HeroImage", heroImageSchema);
+// Create a model from the schema
+const SpecialCamps = mongoose.model("SpecialCamps", specialCampsSchema);
 
-export default HeroImage;
+export default SpecialCamps;

@@ -19,6 +19,7 @@ import heroRoutes from "./routes/heroRoute.js";
 import academyRoute from "./routes/academyRoute.js";
 import programRoutes from "./routes/programRoute.js";
 import ageGroupRoutes from "./routes/ageGroupRoute.js";
+import campsRoutes from "./routes/campsRoutes.js";
 
 
 
@@ -93,6 +94,7 @@ const start = async () => {
   app.use("/api/academy", academyRoute);
   app.use("/api/program", programRoutes);
   app.use("/api/agegroup", ageGroupRoutes);
+  app.use("/api/camps", campsRoutes);
 
   // Catch-all route for non-API and non-admin routes (React App)
   app.get("*", (req, res) => {

@@ -2,10 +2,7 @@ import AdminJSExpress from "@adminjs/express";
 import * as url from "url";
 import express from "express";
 import connectDatabase from "./db/Database.js";
-import galleryRoutes from "./routes/galleryRoute.js";
-import contactRoutes from "./routes/contactRoute.js";
-import brandLogoRoutes from "./routes/brandRoute.js";
-import getTouchRoutes from "./routes/getTouchRoute.js";
+
 import admin from "./src/admin/adminjsSetup.js";
 import cors from "cors";
 import morgan from "morgan";
@@ -13,8 +10,21 @@ import dotenv from "dotenv";
 import path from "path";
 import os from "os";
 
-const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+// all routes imported 
+import galleryRoutes from "./routes/galleryRoute.js";
+import contactRoutes from "./routes/contactRoute.js";
+import brandLogoRoutes from "./routes/brandRoute.js";
+import getTouchRoutes from "./routes/getTouchRoute.js";
+import heroRoutes from "./routes/heroRoute.js";
+import academyRoute from "./routes/academyRoute.js";
+import programRoutes from "./routes/programRoute.js";
+import ageGroupRoutes from "./routes/ageGroupRoute.js";
 
+
+
+
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const PORT = 3000;
 const app = express();
 
@@ -25,9 +35,9 @@ const app = express();
 // };
 os.tmpdir = () => "D:\\temp";
 const DEFAULT_ADMIN = {
-    email: 'admin@example.com',
-    password: 'password',
-  }
+  email: "admin@example.com",
+  password: "password",
+};
 // Authentication logic
 const authenticate = async (email, password) => {
   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
@@ -44,9 +54,8 @@ const start = async () => {
   dotenv.config();
 
   app.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
-//   app.use(express.static(path.join(process.cwd(), "public")));
-
-
+  app.use(express.static(path.join(__dirname, "public")));
+  //   app.use(express.static(path.join(process.cwd(), "public")));
 
   // Connect to MongoDB
   await connectDatabase();
@@ -80,6 +89,10 @@ const start = async () => {
   app.use("/api/contact", contactRoutes);
   app.use("/api/brandlogos", brandLogoRoutes);
   app.use("/api/getintouch", getTouchRoutes);
+  app.use("/api/hero", heroRoutes);
+  app.use("/api/academy", academyRoute);
+  app.use("/api/program", programRoutes);
+  app.use("/api/agegroup", ageGroupRoutes);
 
   // Catch-all route for non-API and non-admin routes (React App)
   app.get("*", (req, res) => {

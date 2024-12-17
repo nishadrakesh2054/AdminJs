@@ -23,6 +23,53 @@ const localProvider = {
 };
 
 export const Resources = [
+  //   // for brand logo
+  {
+    resource: BrandLogo,
+    options: {
+      navigation: {
+        label: "BrandLogo",
+        icon: "Camera",
+      },
+      properties: {
+        _id: { isVisible: false },
+        image: {
+          type: "file",
+          isVisible: { list: true, edit: true, filter: true, show: true },
+        },
+
+        imageKey: { isVisible: false },
+        bucket: { isVisible: false },
+        mime: { isVisible: false },
+      },
+      actions: {
+        list: { isVisible: true },
+        new: { isVisible: true },
+        edit: { isVisible: true },
+        delete: { isVisible: true },
+      },
+    },
+    features: [
+      uploadFeature({
+        provider: { local: localProvider },
+        componentLoader,
+        properties: {
+          filePath: "image",
+          key: "imageKey",
+          bucket: "bucket",
+          mimeType: "mime",
+        },
+
+        validation: {
+          mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        },
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
+        },
+      }),
+    ],
+  },
+
   // for Hero or home slider section
   {
     resource: HeroSlider,
@@ -60,6 +107,9 @@ export const Resources = [
         },
         validation: {
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        },
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
         },
       }),
     ],
@@ -102,48 +152,8 @@ export const Resources = [
         validation: {
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
         },
-      }),
-    ],
-  },
-
-  //   // for brand logo
-  {
-    resource: BrandLogo,
-    options: {
-      navigation: {
-        label: "BrandLogo",
-        icon: "Camera",
-      },
-      properties: {
-        _id: { isVisible: false },
-        image: {
-          type: "file",
-          isVisible: { list: true, edit: true, filter: true, show: true },
-        },
-
-        imageKey: { isVisible: false },
-        bucket: { isVisible: false },
-        mime: { isVisible: false },
-      },
-      actions: {
-        list: { isVisible: true },
-        new: { isVisible: true },
-        edit: { isVisible: true },
-        delete: { isVisible: true },
-      },
-    },
-    features: [
-      uploadFeature({
-        provider: { local: localProvider },
-        componentLoader,
-        properties: {
-          filePath: "image",
-          key: "imageKey",
-          bucket: "bucket",
-          mimeType: "mime",
-        },
-        validation: {
-          mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
         },
       }),
     ],
@@ -186,6 +196,9 @@ export const Resources = [
         },
         validation: {
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        },
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
         },
       }),
     ],
@@ -248,6 +261,9 @@ export const Resources = [
         validation: {
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
         },
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
+        },
       }),
     ],
   },
@@ -289,6 +305,9 @@ export const Resources = [
         },
         validation: {
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        },
+        uploadPath(record, filename) {
+          return `${filename}`; // Save directly under public/uploads with original filename
         },
       }),
     ],

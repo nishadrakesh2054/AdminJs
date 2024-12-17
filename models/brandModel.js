@@ -18,7 +18,7 @@ const brandLogoSchema = new mongoose.Schema(
       type: String,
     },
     bucket: {
-      type: String,
+      type: String, // The bucket path remains static, like "public/uploads"
     },
     mime: {
       type: String,

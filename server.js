@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 import path from "path";
 import os from "os";
 
-// all routes imported 
+// all routes imported
 import galleryRoutes from "./routes/galleryRoute.js";
 import contactRoutes from "./routes/contactRoute.js";
 import brandLogoRoutes from "./routes/brandRoute.js";
@@ -20,32 +20,15 @@ import academyRoute from "./routes/academyRoute.js";
 import programRoutes from "./routes/programRoute.js";
 import ageGroupRoutes from "./routes/ageGroupRoute.js";
 import campsRoutes from "./routes/campsRoutes.js";
+import gameRoute from "./routes/gameRoute.js";
 
-
-
-
+import authenticate from "./middleware/authenticateUser.js";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const PORT = 3000;
 const app = express();
 
-// Admin credentials (replace with a more secure method in production)
-// const DEFAULT_ADMIN = {
-//   email: process.env.ADMIN_EMAIL,
-//   password: process.env.ADMIN_PASSWORD,
-// };
 os.tmpdir = () => "D:\\temp";
-const DEFAULT_ADMIN = {
-  email: "admin@example.com",
-  password: "password",
-};
-// Authentication logic
-const authenticate = async (email, password) => {
-  if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-    return Promise.resolve(DEFAULT_ADMIN);
-  }
-  return null;
-};
 
 const start = async () => {
   // Middleware to parse JSON requests
@@ -56,7 +39,6 @@ const start = async () => {
 
   app.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
   app.use(express.static(path.join(__dirname, "public")));
-  //   app.use(express.static(path.join(process.cwd(), "public")));
 
   // Connect to MongoDB
   await connectDatabase();
@@ -95,6 +77,7 @@ const start = async () => {
   app.use("/api/program", programRoutes);
   app.use("/api/agegroup", ageGroupRoutes);
   app.use("/api/camps", campsRoutes);
+  app.use("/api/games", gameRoute);
 
   // Catch-all route for non-API and non-admin routes (React App)
   app.get("*", (req, res) => {

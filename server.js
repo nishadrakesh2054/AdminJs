@@ -21,6 +21,7 @@ import programRoutes from "./routes/programRoute.js";
 import ageGroupRoutes from "./routes/ageGroupRoute.js";
 import campsRoutes from "./routes/campsRoutes.js";
 import gameRoute from "./routes/gameRoute.js";
+import Career from "./routes/careerRoute.js";
 
 import authenticate from "./middleware/authenticateUser.js";
 
@@ -78,6 +79,7 @@ const start = async () => {
   app.use("/api/agegroup", ageGroupRoutes);
   app.use("/api/camps", campsRoutes);
   app.use("/api/games", gameRoute);
+  app.use("/api/career", Career);
 
   // Catch-all route for non-API and non-admin routes (React App)
   app.get("*", (req, res) => {

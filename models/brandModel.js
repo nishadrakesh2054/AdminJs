@@ -29,6 +29,6 @@ const brandLogoSchema = new mongoose.Schema(
   }
 );
 
-const BrandLogo = mongoose.model("BrandLogo", brandLogoSchema);
+const BrandLogo = mongoose.model("Brand Partner", brandLogoSchema);
 
 export default BrandLogo;

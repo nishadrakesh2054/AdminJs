@@ -20,6 +20,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("UserTouch", userSchema);
+const User = mongoose.model("Get Touch", userSchema);
 
 export default User;

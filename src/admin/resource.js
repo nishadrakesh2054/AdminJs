@@ -18,6 +18,8 @@ import Application from "../../models/applicationModel.js";
 import PointsTable from "../../models/PointsTableModel.js";
 import GameGroup from "../../models/gameGroupModel.js";
 import GamePointsTable from "../../models/gamePointsTable.js";
+import Multimedia from "../../models/multimediaModel.js";
+
 
 import uploadFeature from "@adminjs/upload";
 import { componentLoader } from "./componentsLoader.js";
@@ -273,6 +275,91 @@ export const Resources = [
         uploadPath(record, filename) {
           return `${filename}`; // Save directly under public/uploads with original filename
         },
+      }),
+    ],
+  },
+
+  //   for multimedia upload
+  {
+    resource: Multimedia,
+    options: {
+      navigation: {
+        name: "Media",
+        icon: "Image",
+      },
+      properties: {
+        _id: { isVisible: false },
+        images: {
+          type: "file",
+          isArray: true,
+          isVisible: { list: true, edit: true, filter: true, show: true },
+        },
+
+        imageKey: { isVisible: false },
+        bucket: { isVisible: false },
+        mime: { isVisible: false },
+      },
+      actions: {
+        list: {
+          isAccessible: ({ currentAdmin }) => {
+            // admin, sub-admin, and editor can view the list
+            return (
+              currentAdmin &&
+              (currentAdmin.role === "admin" ||
+                currentAdmin.role === "sub-admin" ||
+                currentAdmin.role === "editor")
+            );
+          },
+        },
+        new: {
+          isAccessible: ({ currentAdmin }) => {
+            // Only admin and sub-admin can create new brand logos
+            return (
+              currentAdmin &&
+              (currentAdmin.role === "admin" ||
+                currentAdmin.role === "sub-admin")
+            );
+          },
+        },
+        edit: {
+          isAccessible: ({ currentAdmin }) => {
+            // admin, sub-admin, and editor can edit brand logos
+            return (
+              currentAdmin &&
+              (currentAdmin.role === "admin" ||
+                currentAdmin.role === "sub-admin" ||
+                currentAdmin.role === "editor")
+            );
+          },
+        },
+        delete: {
+          isAccessible: ({ currentAdmin }) => {
+            // Only admin can delete brand logos
+            return currentAdmin && currentAdmin.role === "admin";
+          },
+        },
+      },
+    },
+    features: [
+      uploadFeature({
+        provider: { local: localProvider },
+        componentLoader,
+        multiple: true,
+        properties: {
+          filePath: "images",
+          key: "imageKey",
+          bucket: "bucket",
+          mimeType: "mime",
+        },
+        validation: {
+          mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
+        },
+        uploadPath(record, filename) {
+        //   return `${filename}`;
+        return `Multimedia/${Date.now()}_${filename}`;
+        },
+     
+
       }),
     ],
   },

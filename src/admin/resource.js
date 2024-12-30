@@ -20,7 +20,6 @@ import GameGroup from "../../models/gameGroupModel.js";
 import GamePointsTable from "../../models/gamePointsTable.js";
 import Multimedia from "../../models/multimediaModel.js";
 
-
 import uploadFeature from "@adminjs/upload";
 import { componentLoader } from "./componentsLoader.js";
 import bcrypt from "bcrypt";
@@ -355,11 +354,9 @@ export const Resources = [
           mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
         },
         uploadPath(record, filename) {
-        //   return `${filename}`;
-        return `Multimedia/${Date.now()}_${filename}`;
+          //   return `${filename}`;
+          return `Multimedia/${Date.now()}_${filename}`;
         },
-     
-
       }),
     ],
   },
